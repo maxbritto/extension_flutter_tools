@@ -10,7 +10,7 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter:
     sdk: flutter
-  intl: ^0.17.0
+  intl: ^0.18.0
 
 dev_dependencies:
   lints: ^1.0.0
