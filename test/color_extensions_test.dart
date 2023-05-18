@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:extension_flutter_tools/extension_flutter_tools.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 main() {
   test('Test HTML color conversion', () {
