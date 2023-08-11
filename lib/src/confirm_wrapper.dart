@@ -31,7 +31,7 @@ class ConfirmWrapperState extends State<ConfirmWrapper> {
           child: widget.childBuilder(userNeedsToConfirm));
     } else {
       return Row(mainAxisSize: MainAxisSize.min, children: [
-        Text(widget.confirmationQuestionText),
+        Flexible(child: Text(widget.confirmationQuestionText)),
         TextButton(
             onPressed: userAccepted, child: Text(widget.confirmationYesText)),
         TextButton(
