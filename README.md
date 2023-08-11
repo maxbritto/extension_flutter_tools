@@ -35,7 +35,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  directus_api_manager:
+  extension_flutter_tools:
     git: https://github.com/maxbritto/extension_flutter_tools.git
 ```
 
@@ -47,5 +47,7 @@ If you want to add new widgets or extensions, please keep in mind before submitt
 - Unit tests and automated tests are mandatory. 100% coverage is required for any newly added code
 
 Thanks for your contributions!
+
 Happy Coding.
+
 Maxime
