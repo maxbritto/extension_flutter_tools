@@ -1,25 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class DateTimeButton extends StatelessWidget {
-  final DateTime initialDateTime;
+enum DateTimeButtonMode { date, dateAndTime }
+
+class DateTimeButton extends StatefulWidget {
+  final DateTime? initialDateTime;
+  final DateTimeButtonMode mode;
+  final DateTime? minAcceptedDate;
+  final DateTime? maxAcceptedDate;
   final void Function(DateTime newDateTime) onNewDateTimeSelected;
-  const DateTimeButton(
+  DateTimeButton(
       {Key? key,
-      required this.initialDateTime,
-      required this.onNewDateTimeSelected})
+      this.initialDateTime,
+      this.minAcceptedDate,
+      this.maxAcceptedDate,
+      required this.onNewDateTimeSelected,
+      this.mode = DateTimeButtonMode.dateAndTime})
       : super(key: key);
 
   @override
+  State<DateTimeButton> createState() => _DateTimeButtonState();
+
+  @visibleForTesting
+  DateFormat get dateFormat {
+    final DateFormat dateFormat = DateFormat.yMMMMd();
+    if (mode == DateTimeButtonMode.dateAndTime) {
+      return dateFormat.add_Hm();
+    } else {
+      return dateFormat;
+    }
+  }
+}
+
+class _DateTimeButtonState extends State<DateTimeButton> {
+  DateTime? selectedDateTime;
+
+  @override
   Widget build(BuildContext context) {
+    final displayedDate = selectedDateTime ?? widget.initialDateTime;
+    final String displayedText = displayedDate == null
+        ? "- - -"
+        : widget.dateFormat.format(displayedDate);
     return OutlinedButton.icon(
         onPressed: () async {
+          final initialDateTime = widget.initialDateTime ?? DateTime.now();
           DateTime? newDate = await showDatePicker(
               context: context,
               initialDate: initialDateTime,
-              firstDate: initialDateTime.add(Duration(days: -800)),
-              lastDate: initialDateTime.add(Duration(days: 800)));
-          if (newDate != null) {
+              firstDate: widget.minAcceptedDate ?? DateTime(1900, 1, 1),
+              lastDate: widget.maxAcceptedDate ??
+                  initialDateTime.add(Duration(days: 365)));
+          if (widget.mode == DateTimeButtonMode.dateAndTime &&
+              newDate != null) {
             final TimeOfDay? newTime = await showTimePicker(
               context: context,
               initialTime: TimeOfDay(
@@ -30,10 +62,15 @@ class DateTimeButton extends StatelessWidget {
               newDate = DateTime(newDate.year, newDate.month, newDate.day,
                   newTime.hour, newTime.minute);
             }
-            onNewDateTimeSelected(newDate);
+          }
+          if (newDate != null) {
+            setState(() {
+              selectedDateTime = newDate;
+            });
+            widget.onNewDateTimeSelected(newDate);
           }
         },
         icon: Icon(Icons.date_range),
-        label: Text(DateFormat.MMMEd().add_Hm().format(initialDateTime)));
+        label: Text(displayedText));
   }
 }
