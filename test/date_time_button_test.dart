@@ -1,7 +1,6 @@
 import 'package:extension_flutter_tools/src/date_time_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/intl.dart';
 
 void main() {
   group("DateTimeButton", () {
