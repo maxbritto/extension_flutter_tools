@@ -1,3 +1,8 @@
+## 1.1.1
+
+TestTools : 
+- Added a pump call to the runTestableWidgetScreen function. This allows the launched screen to trigger an async call after being launched.
+
 ## 1.1.0
 
 - Added an `ErrorView` component to display error messages.
