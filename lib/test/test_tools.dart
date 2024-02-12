@@ -25,6 +25,7 @@ class TestTools {
       locale: locale,
       home: child,
     ));
+    await tester.pump();
   }
 
   static Future<void> runTestableComponent(
