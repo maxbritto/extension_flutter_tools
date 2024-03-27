@@ -1,3 +1,7 @@
+## 1.1.2
+Dependencies :
+- Allows intl 0.19.0
+
 ## 1.1.1
 
 TestTools : 
