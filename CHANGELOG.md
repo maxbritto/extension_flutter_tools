@@ -1,3 +1,6 @@
+## 1.2.0 
+- DateTimeButton : allows passing a null value to the onNewDateTimeSelected callback. When null is passed, the button will be disabled.
+
 ## 1.1.2
 Dependencies :
 - Allows intl 0.19.0

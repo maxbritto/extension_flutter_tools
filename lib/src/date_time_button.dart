@@ -8,7 +8,11 @@ class DateTimeButton extends StatefulWidget {
   final DateTimeButtonMode mode;
   final DateTime? minAcceptedDate;
   final DateTime? maxAcceptedDate;
-  final void Function(DateTime newDateTime) onNewDateTimeSelected;
+
+  /// Callback function that is called when a new date is selected and confirmed by the user
+  /// The new date is passed as a parameter to the function
+  /// If null, the button is disabled
+  final void Function(DateTime newDateTime)? onNewDateTimeSelected;
   DateTimeButton(
       {Key? key,
       this.initialDateTime,
@@ -37,39 +41,44 @@ class _DateTimeButtonState extends State<DateTimeButton> {
 
   @override
   Widget build(BuildContext context) {
+    final onNewDateTimeSelected = widget.onNewDateTimeSelected;
     final displayedDate = selectedDateTime ?? widget.initialDateTime;
     final String displayedText = displayedDate == null
         ? "- - -"
         : widget.dateFormat.format(displayedDate);
     return OutlinedButton.icon(
-        onPressed: () async {
-          final initialDateTime = widget.initialDateTime ?? DateTime.now();
-          DateTime? newDate = await showDatePicker(
-              context: context,
-              initialDate: initialDateTime,
-              firstDate: widget.minAcceptedDate ?? DateTime(1900, 1, 1),
-              lastDate: widget.maxAcceptedDate ??
-                  initialDateTime.add(Duration(days: 365)));
-          if (widget.mode == DateTimeButtonMode.dateAndTime &&
-              newDate != null) {
-            final TimeOfDay? newTime = await showTimePicker(
-              context: context,
-              initialTime: TimeOfDay(
-                  hour: initialDateTime.hour, minute: initialDateTime.minute),
-              initialEntryMode: TimePickerEntryMode.input,
-            );
-            if (newTime != null) {
-              newDate = DateTime(newDate.year, newDate.month, newDate.day,
-                  newTime.hour, newTime.minute);
-            }
-          }
-          if (newDate != null) {
-            setState(() {
-              selectedDateTime = newDate;
-            });
-            widget.onNewDateTimeSelected(newDate);
-          }
-        },
+        onPressed: onNewDateTimeSelected == null
+            ? null
+            : () async {
+                final initialDateTime =
+                    widget.initialDateTime ?? DateTime.now();
+                DateTime? newDate = await showDatePicker(
+                    context: context,
+                    initialDate: initialDateTime,
+                    firstDate: widget.minAcceptedDate ?? DateTime(1900, 1, 1),
+                    lastDate: widget.maxAcceptedDate ??
+                        initialDateTime.add(Duration(days: 365)));
+                if (widget.mode == DateTimeButtonMode.dateAndTime &&
+                    newDate != null) {
+                  final TimeOfDay? newTime = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay(
+                        hour: initialDateTime.hour,
+                        minute: initialDateTime.minute),
+                    initialEntryMode: TimePickerEntryMode.input,
+                  );
+                  if (newTime != null) {
+                    newDate = DateTime(newDate.year, newDate.month, newDate.day,
+                        newTime.hour, newTime.minute);
+                  }
+                }
+                if (newDate != null) {
+                  setState(() {
+                    selectedDateTime = newDate;
+                  });
+                  onNewDateTimeSelected(newDate);
+                }
+              },
         icon: Icon(Icons.date_range),
         label: Text(displayedText));
   }
