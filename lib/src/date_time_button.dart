@@ -9,6 +9,9 @@ class DateTimeButton extends StatefulWidget {
   final DateTime? minAcceptedDate;
   final DateTime? maxAcceptedDate;
 
+  /// Formatter for the date and time displayed in the button. If not provided, defaults to `DateFormat.yMMMMd()` for date only mode and `DateFormat.yMMMMd().add_Hm()` for date and time mode
+  final DateFormat? dateFormatter;
+
   /// Callback function that is called when a new date is selected and confirmed by the user
   /// The new date is passed as a parameter to the function
   /// If null, the button is disabled
@@ -18,6 +21,7 @@ class DateTimeButton extends StatefulWidget {
       this.initialDateTime,
       this.minAcceptedDate,
       this.maxAcceptedDate,
+      this.dateFormatter,
       required this.onNewDateTimeSelected,
       this.mode = DateTimeButtonMode.dateAndTime})
       : super(key: key);
@@ -27,11 +31,15 @@ class DateTimeButton extends StatefulWidget {
 
   @visibleForTesting
   DateFormat get dateFormat {
-    final DateFormat dateFormat = DateFormat.yMMMMd();
+    DateFormat? dateFormatter = this.dateFormatter;
+    if (dateFormatter != null) {
+      return dateFormatter;
+    }
+    dateFormatter = DateFormat.yMMMMd();
     if (mode == DateTimeButtonMode.dateAndTime) {
-      return dateFormat.add_Hm();
+      return dateFormatter.add_Hm();
     } else {
-      return dateFormat;
+      return dateFormatter;
     }
   }
 }
