@@ -1,3 +1,8 @@
+## 1.4.0 
+
+- DateTimeButton : allows a clear button to be displayed next to the date button. The clear button will clear the selected date and call the `onDateTimeCleared` callback. This button will only appear if the `onDateTimeCleared` callback is provided and a date is selected.
+- Updated linting rules to be more strict : this may lead to new warnings if you forgot some const calls. Just add `const` where needed to remove the warnings and make your code more efficient.
+
 ## 1.3.0 
 
 - DateTimeButton : allows passing a custom DateFormat object that will be used to display the selected date on the button. 
