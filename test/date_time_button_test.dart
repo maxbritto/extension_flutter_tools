@@ -75,5 +75,64 @@ void main() {
       await widgetTester.pumpAndSettle();
       expect(find.text("- - -"), findsNothing);
     });
+    testWidgets(
+        "Add a clear button when a date is present and the clear callback function is provided",
+        (widgetTester) async {
+      await widgetTester.pumpWidget(MaterialApp(
+          home: DateTimeButton(
+              initialDateTime: DateTime(2021, 1, 1, 12, 0),
+              mode: DateTimeButtonMode.date,
+              onNewDateTimeSelected: (selectedDate) {},
+              onDateTimeCleared: () {})));
+      expect(find.byIcon(Icons.clear), findsOneWidget);
+    });
+    testWidgets(
+        "Do not add a clear button when a date is present and the clear callback function is NOT provided",
+        (widgetTester) async {
+      await widgetTester.pumpWidget(MaterialApp(
+          home: DateTimeButton(
+              initialDateTime: DateTime(2021, 1, 1, 12, 0),
+              mode: DateTimeButtonMode.date,
+              onNewDateTimeSelected: (selectedDate) {})));
+      expect(find.byIcon(Icons.clear), findsNothing);
+    });
+    testWidgets("Tapping on the clear button when a date was present initially",
+        (widgetTester) async {
+      DateTime? newDateTime;
+      await widgetTester.pumpWidget(MaterialApp(
+          home: DateTimeButton(
+              initialDateTime: DateTime(2021, 1, 1, 12, 0),
+              mode: DateTimeButtonMode.date,
+              onNewDateTimeSelected: (selectedDate) {
+                newDateTime = selectedDate;
+              },
+              onDateTimeCleared: () {
+                newDateTime = null;
+              })));
+      await widgetTester.tap(find.byIcon(Icons.clear));
+      await widgetTester.pumpAndSettle();
+      expect(newDateTime, isNull);
+    });
+    testWidgets(
+        "Tapping on the clear button when NO date was present initially but the user had selected a date himself",
+        (widgetTester) async {
+      DateTime? newDateTime;
+      await widgetTester.pumpWidget(MaterialApp(
+          home: DateTimeButton(
+              mode: DateTimeButtonMode.date,
+              onNewDateTimeSelected: (selectedDate) {
+                newDateTime = selectedDate;
+              },
+              onDateTimeCleared: () {
+                newDateTime = null;
+              })));
+      await widgetTester.tap(find.byType(DateTimeButton));
+      await widgetTester.pumpAndSettle();
+      await widgetTester.tap(find.text("OK"));
+      await widgetTester.pumpAndSettle();
+      await widgetTester.tap(find.byIcon(Icons.clear));
+      await widgetTester.pumpAndSettle();
+      expect(newDateTime, isNull);
+    });
   });
 }

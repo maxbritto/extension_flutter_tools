@@ -16,12 +16,18 @@ class DateTimeButton extends StatefulWidget {
   /// The new date is passed as a parameter to the function
   /// If null, the button is disabled
   final void Function(DateTime newDateTime)? onNewDateTimeSelected;
+
+  /// Callback function that is called when the user clears the date and time
+  /// If provided, the clear button will appear if a date is present and the function will be called when the user taps the clear button
+  /// If null, the clear button will never appear
+  final void Function()? onDateTimeCleared;
   DateTimeButton(
       {Key? key,
       this.initialDateTime,
       this.minAcceptedDate,
       this.maxAcceptedDate,
       this.dateFormatter,
+      this.onDateTimeCleared,
       required this.onNewDateTimeSelected,
       this.mode = DateTimeButtonMode.dateAndTime})
       : super(key: key);
@@ -54,7 +60,7 @@ class _DateTimeButtonState extends State<DateTimeButton> {
     final String displayedText = displayedDate == null
         ? "- - -"
         : widget.dateFormat.format(displayedDate);
-    return OutlinedButton.icon(
+    final dateTimeButton = OutlinedButton.icon(
         onPressed: onNewDateTimeSelected == null
             ? null
             : () async {
@@ -89,5 +95,25 @@ class _DateTimeButtonState extends State<DateTimeButton> {
               },
         icon: Icon(Icons.date_range),
         label: Text(displayedText));
+
+    final onDateTimeCleared = widget.onDateTimeCleared;
+    if (onDateTimeCleared != null && displayedDate != null) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          dateTimeButton,
+          IconButton(
+              icon: const Icon(Icons.clear),
+              onPressed: () {
+                setState(() {
+                  selectedDateTime = null;
+                });
+                onDateTimeCleared();
+              })
+        ],
+      );
+    } else {
+      return dateTimeButton;
+    }
   }
 }
