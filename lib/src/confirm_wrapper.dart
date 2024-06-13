@@ -8,14 +8,13 @@ class ConfirmWrapper extends StatefulWidget {
   final void Function() onConfirm;
   final void Function()? onCancel;
   const ConfirmWrapper(
-      {Key? key,
+      {super.key,
       required this.childBuilder,
       this.confirmationQuestionText = "Are you sure ?",
       this.confirmationYesText = "Yes",
       this.confirmationNoText = "No",
       required this.onConfirm,
-      this.onCancel})
-      : super(key: key);
+      this.onCancel});
 
   @override
   State<ConfirmWrapper> createState() => ConfirmWrapperState();

@@ -9,8 +9,7 @@ class NetworkOrFileImage extends StatelessWidget {
   final double? width;
   final double? height;
   const NetworkOrFileImage(
-      {required this.imageUri, this.height, this.width, this.fit, Key? key})
-      : super(key: key);
+      {required this.imageUri, this.height, this.width, this.fit, super.key});
 
   @override
   Widget build(BuildContext context) {

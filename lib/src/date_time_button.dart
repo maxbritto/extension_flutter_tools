@@ -21,16 +21,15 @@ class DateTimeButton extends StatefulWidget {
   /// If provided, the clear button will appear if a date is present and the function will be called when the user taps the clear button
   /// If null, the clear button will never appear
   final void Function()? onDateTimeCleared;
-  DateTimeButton(
-      {Key? key,
+  const DateTimeButton(
+      {super.key,
       this.initialDateTime,
       this.minAcceptedDate,
       this.maxAcceptedDate,
       this.dateFormatter,
       this.onDateTimeCleared,
       required this.onNewDateTimeSelected,
-      this.mode = DateTimeButtonMode.dateAndTime})
-      : super(key: key);
+      this.mode = DateTimeButtonMode.dateAndTime});
 
   @override
   State<DateTimeButton> createState() => _DateTimeButtonState();
@@ -71,9 +70,10 @@ class _DateTimeButtonState extends State<DateTimeButton> {
                     initialDate: initialDateTime,
                     firstDate: widget.minAcceptedDate ?? DateTime(1900, 1, 1),
                     lastDate: widget.maxAcceptedDate ??
-                        initialDateTime.add(Duration(days: 365)));
+                        initialDateTime.add(const Duration(days: 365)));
                 if (widget.mode == DateTimeButtonMode.dateAndTime &&
-                    newDate != null) {
+                    newDate != null &&
+                    context.mounted) {
                   final TimeOfDay? newTime = await showTimePicker(
                     context: context,
                     initialTime: TimeOfDay(
@@ -93,7 +93,7 @@ class _DateTimeButtonState extends State<DateTimeButton> {
                   onNewDateTimeSelected(newDate);
                 }
               },
-        icon: Icon(Icons.date_range),
+        icon: const Icon(Icons.date_range),
         label: Text(displayedText));
 
     final onDateTimeCleared = widget.onDateTimeCleared;

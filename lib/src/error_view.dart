@@ -13,15 +13,14 @@ class ErrorView extends StatefulWidget {
   static const defaultCancelActionTitle = "Annuler";
 
   const ErrorView(
-      {Key? key,
+      {super.key,
       required this.title,
       this.subtitle,
       this.details,
       this.resolutionAction,
       this.resolutionActionText,
       this.cancelAction,
-      this.cancelActionText})
-      : super(key: key);
+      this.cancelActionText});
 
   @override
   State<ErrorView> createState() => _ErrorViewState();

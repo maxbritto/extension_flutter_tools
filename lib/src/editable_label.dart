@@ -6,12 +6,11 @@ class EditableLabel extends StatefulWidget {
   final Function()? onEditingStarted;
   final Function()? onEditingFinished;
   const EditableLabel(
-      {Key? key,
+      {super.key,
       required this.initialText,
       required this.onTextChanged,
       this.onEditingStarted,
-      this.onEditingFinished})
-      : super(key: key);
+      this.onEditingFinished});
 
   @override
   State<EditableLabel> createState() => _EditableLabelState();
@@ -26,7 +25,7 @@ class _EditableLabelState extends State<EditableLabel> {
       return Row(
         children: [
           Expanded(child: Text(newText ?? widget.initialText)),
-          SizedBox(width: 5),
+          const SizedBox(width: 5),
           IconButton(onPressed: switchEditingMode, icon: const Icon(Icons.edit))
         ],
       );
