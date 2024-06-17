@@ -1,3 +1,7 @@
+## 1.4.1
+
+- TestTools : added a `scrollUntilVisible` function to scroll a Scrollable view until a specific widget is visible. This function is useful to test widgets that are not visible on the screen by default.
+
 ## 1.4.0 
 
 - DateTimeButton : allows a clear button to be displayed next to the date button. The clear button will clear the selected date and call the `onDateTimeCleared` callback. This button will only appear if the `onDateTimeCleared` callback is provided and a date is selected.
