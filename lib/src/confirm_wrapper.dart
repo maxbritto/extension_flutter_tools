@@ -32,9 +32,13 @@ class ConfirmWrapperState extends State<ConfirmWrapper> {
       return Row(mainAxisSize: MainAxisSize.min, children: [
         Flexible(child: Text(widget.confirmationQuestionText)),
         TextButton(
-            onPressed: userAccepted, child: Text(widget.confirmationYesText)),
+            key: const Key('wrapper_confirm_button'),
+            onPressed: userAccepted,
+            child: Text(widget.confirmationYesText)),
         TextButton(
-            onPressed: userCancelled, child: Text(widget.confirmationNoText)),
+            key: const Key('wrapper_cancel_button'),
+            onPressed: userCancelled,
+            child: Text(widget.confirmationNoText)),
       ]);
     }
   }
