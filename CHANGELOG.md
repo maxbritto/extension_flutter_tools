@@ -1,6 +1,10 @@
-## 1.4.1
+## 1.4.2
 
 - DateTimeButton : Fixes a bug where the button was not working if we passed a minimum date in the future and no initial date.
+
+## 1.4.1
+
+- TestTools : added a `scrollUntilVisible` function to scroll a Scrollable view until a specific widget is visible. This function is useful to test widgets that are not visible on the screen by default.
 
 ## 1.4.0 
 

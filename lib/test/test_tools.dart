@@ -50,4 +50,15 @@ class TestTools {
       return charCode;
     }));
   }
+
+  static Future scrollUntilVisible(
+      FinderBase<Element> finder, WidgetTester tester,
+      {required Finder rootScrollView}) async {
+    // Use this solution to ensure the scrollable finder is specific to the SingleChildScrollView
+    final scrollableFinder = find.descendant(
+      of: rootScrollView,
+      matching: find.byType(Scrollable).at(0),
+    );
+    await tester.scrollUntilVisible(finder, 50, scrollable: scrollableFinder);
+  }
 }
