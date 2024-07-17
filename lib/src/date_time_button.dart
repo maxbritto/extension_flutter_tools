@@ -63,22 +63,23 @@ class _DateTimeButtonState extends State<DateTimeButton> {
         onPressed: onNewDateTimeSelected == null
             ? null
             : () async {
-                final initialDateTime =
-                    widget.initialDateTime ?? DateTime.now();
+                final initialDateTime = widget.initialDateTime;
+                final now = DateTime.now();
                 DateTime? newDate = await showDatePicker(
                     context: context,
                     initialDate: initialDateTime,
                     firstDate: widget.minAcceptedDate ?? DateTime(1900, 1, 1),
                     lastDate: widget.maxAcceptedDate ??
-                        initialDateTime.add(const Duration(days: 365)));
+                        (initialDateTime ?? now)
+                            .add(const Duration(days: 365)));
                 if (widget.mode == DateTimeButtonMode.dateAndTime &&
                     newDate != null &&
                     context.mounted) {
                   final TimeOfDay? newTime = await showTimePicker(
                     context: context,
                     initialTime: TimeOfDay(
-                        hour: initialDateTime.hour,
-                        minute: initialDateTime.minute),
+                        hour: (initialDateTime ?? now).hour,
+                        minute: (initialDateTime ?? now).minute),
                     initialEntryMode: TimePickerEntryMode.input,
                   );
                   if (newTime != null) {

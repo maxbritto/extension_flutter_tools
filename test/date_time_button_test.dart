@@ -4,6 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group("DateTimeButton", () {
+    Future<void> tapOnButtonThenPickDate(WidgetTester widgetTester,
+        {String day = "28"}) async {
+      await widgetTester.tap(find.byType(DateTimeButton));
+      await widgetTester.pumpAndSettle();
+      await widgetTester.tap(find.text(day));
+      await widgetTester.tap(find.text("OK"));
+      await widgetTester.pumpAndSettle();
+    }
+
     test("Display when mode is date and time", () {
       final dateTimeButton = DateTimeButton(
           initialDateTime: DateTime(2021, 1, 1, 12, 0),
@@ -28,9 +37,7 @@ void main() {
               onNewDateTimeSelected: (selectedDate) {
                 newDateTime = selectedDate;
               })));
-      await widgetTester.tap(find.byType(DateTimeButton));
-      await widgetTester.pumpAndSettle();
-      await widgetTester.tap(find.text("OK"));
+      await tapOnButtonThenPickDate(widgetTester);
 
       await widgetTester.pumpAndSettle();
       await widgetTester.tap(find.text("OK"));
@@ -47,10 +54,7 @@ void main() {
               onNewDateTimeSelected: (selectedDate) {
                 newDateTime = selectedDate;
               })));
-      await widgetTester.tap(find.byType(DateTimeButton));
-      await widgetTester.pumpAndSettle();
-      await widgetTester.tap(find.text("OK"));
-      await widgetTester.pumpAndSettle();
+      await tapOnButtonThenPickDate(widgetTester);
       expect(newDateTime, isNotNull);
     });
 
@@ -67,13 +71,25 @@ void main() {
         (widgetTester) async {
       await widgetTester.pumpWidget(MaterialApp(
           home: DateTimeButton(
+              initialDateTime: null,
               mode: DateTimeButtonMode.date,
               onNewDateTimeSelected: (selectedDate) {})));
+      await tapOnButtonThenPickDate(widgetTester);
+      expect(find.text("- - -"), findsNothing);
+    });
+    testWidgets("Display when intialDate is null and minDate is in the future",
+        (widgetTester) async {
+      final now = DateTime.now();
+      await widgetTester.pumpWidget(MaterialApp(
+          home: DateTimeButton(
+              mode: DateTimeButtonMode.date,
+              minAcceptedDate: now.add(const Duration(days: 1)),
+              onNewDateTimeSelected: (selectedDate) {})));
+      expect(find.text("- - -"), findsOneWidget);
       await widgetTester.tap(find.byType(DateTimeButton));
       await widgetTester.pumpAndSettle();
-      await widgetTester.tap(find.text("OK"));
-      await widgetTester.pumpAndSettle();
-      expect(find.text("- - -"), findsNothing);
+      expect(find.text("OK"), findsOneWidget,
+          reason: "Button should be working");
     });
     testWidgets(
         "Add a clear button when a date is present and the clear callback function is provided",
@@ -126,10 +142,8 @@ void main() {
               onDateTimeCleared: () {
                 newDateTime = null;
               })));
-      await widgetTester.tap(find.byType(DateTimeButton));
-      await widgetTester.pumpAndSettle();
-      await widgetTester.tap(find.text("OK"));
-      await widgetTester.pumpAndSettle();
+      await tapOnButtonThenPickDate(widgetTester);
+
       await widgetTester.tap(find.byIcon(Icons.clear));
       await widgetTester.pumpAndSettle();
       expect(newDateTime, isNull);

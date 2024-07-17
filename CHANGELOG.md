@@ -1,3 +1,7 @@
+## 1.4.1
+
+- DateTimeButton : Fixes a bug where the button was not working if we passed a minimum date in the future and no initial date.
+
 ## 1.4.0 
 
 - DateTimeButton : allows a clear button to be displayed next to the date button. The clear button will clear the selected date and call the `onDateTimeCleared` callback. This button will only appear if the `onDateTimeCleared` callback is provided and a date is selected.
