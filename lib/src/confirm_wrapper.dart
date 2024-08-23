@@ -34,7 +34,8 @@ class ConfirmWrapperState extends State<ConfirmWrapper> {
         TextButton(
             key: const Key('wrapper_confirm_button'),
             onPressed: userAccepted,
-            child: Text(widget.confirmationYesText)),
+            child: Text(widget.confirmationYesText),
+            style: TextStyle(color: Theme.of(context).colorScheme.error)),
         TextButton(
             key: const Key('wrapper_cancel_button'),
             onPressed: userCancelled,

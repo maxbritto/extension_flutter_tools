@@ -1,3 +1,7 @@
+## 1.5.0
+
+- The `ConfirmWrapper` widget now displays the confirmation button using the theme's error color (usually red). This makes it easier for users to identify the button that will perform the destructive action.
+
 ## 1.4.2
 
 - DateTimeButton : Fixes a bug where the button was not working if we passed a minimum date in the future and no initial date.
