@@ -17,6 +17,7 @@ Useful Widgets and class extensions for Flutter apps
 
 ### Widgets
 
+- `CopyToClipboardButton` : A button that will copy a text to the clipboard when pressed. The text to copy is passed as a parameter to the widget.
 - `ConfirmWrapper` : Wrap any tappable widget with a graphical confirmation from the user. Useful for delete button, dangerous operations, etc.
 - `DateTimeButton` : A button that allows the user to select a date (and optionnaly a time). The buttons displays the selected date.
 - `EditableLabel` : A simple text with an edit button next to it. When clicked, a `TextField` allows to edit the value and save it.
