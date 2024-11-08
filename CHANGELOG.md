@@ -1,3 +1,8 @@
+## 1.6.0
+
+- New Widget : `CopyToClipboardButton` : a button that will copy a text to the clipboard when pressed. The text to copy is passed as a parameter to the widget.
+- The `DateTimeButton` now exposes a new `Locale` parameter that will be passed to the date selector widget. This can be used to translate the UI of the date selector widget.
+
 ## 1.5.0
 
 - The `ConfirmWrapper` widget now displays the confirmation button using the theme's error color (usually red). This makes it easier for users to identify the button that will perform the destructive action.

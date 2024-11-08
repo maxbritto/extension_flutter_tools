@@ -8,6 +8,7 @@ class DateTimeButton extends StatefulWidget {
   final DateTimeButtonMode mode;
   final DateTime? minAcceptedDate;
   final DateTime? maxAcceptedDate;
+  final Locale? locale;
 
   /// Formatter for the date and time displayed in the button. If not provided, defaults to `DateFormat.yMMMMd()` for date only mode and `DateFormat.yMMMMd().add_Hm()` for date and time mode
   final DateFormat? dateFormatter;
@@ -27,6 +28,7 @@ class DateTimeButton extends StatefulWidget {
       this.minAcceptedDate,
       this.maxAcceptedDate,
       this.dateFormatter,
+      this.locale,
       this.onDateTimeCleared,
       required this.onNewDateTimeSelected,
       this.mode = DateTimeButtonMode.dateAndTime});
@@ -66,6 +68,7 @@ class _DateTimeButtonState extends State<DateTimeButton> {
                 final initialDateTime = widget.initialDateTime;
                 final now = DateTime.now();
                 DateTime? newDate = await showDatePicker(
+                    locale: widget.locale,
                     context: context,
                     initialDate: initialDateTime,
                     firstDate: widget.minAcceptedDate ?? DateTime(1900, 1, 1),
