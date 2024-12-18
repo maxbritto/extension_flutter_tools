@@ -1,6 +1,7 @@
 name: extension_flutter_tools
 description: Extensions and functions useful for a flutter app.
-version: 1.5.1
+version: 1.6.0
+repository: https://github.com/maxbritto/extension_flutter_tools
 
 environment:
   sdk: '>=3.4.1 <4.0.0'
@@ -11,8 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   intl: '>=0.18.0 <=0.19.0'
+  flutter_test:
+    sdk: flutter
 
 dev_dependencies:
   flutter_lints: ^3.0.0
-  flutter_test:
-    sdk: flutter
