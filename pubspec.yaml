@@ -1,6 +1,6 @@
 name: extension_flutter_tools
 description: Extensions and functions useful for a flutter app.
-version: 1.6.2
+version: 1.6.3
 repository: https://github.com/maxbritto/extension_flutter_tools
 
 environment:

@@ -1,3 +1,7 @@
+## 1.6.3
+
+- ErrorView : makes the details text selectable. This is useful when the details text is a long text that the user may want to copy.
+
 ## 1.6.2
 
 - Updated intl dependency to 0.20.2 to match latest flutter version

@@ -93,7 +93,7 @@ class _ErrorViewState extends State<ErrorView> {
                 ],
               ),
             if (details != null && _isExpanded)
-              Text(
+              SelectableText(
                 details,
                 style: textTheme.labelSmall,
               ),
