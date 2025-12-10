@@ -1,3 +1,8 @@
+## 1.7.0
+
+Possible Breaking Change :
+- DateTimeButton : initialDateTime is now converted to local timezone before being displayed. This should have always been the behaviour but if you were using it in a different timezone and had worked around this limitation, you may need to adjust your code now that it is working as expected.
+
 ## 1.6.3
 
 - ErrorView : makes the details text selectable. This is useful when the details text is a long text that the user may want to copy.

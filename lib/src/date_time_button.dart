@@ -57,7 +57,7 @@ class _DateTimeButtonState extends State<DateTimeButton> {
   @override
   Widget build(BuildContext context) {
     final onNewDateTimeSelected = widget.onNewDateTimeSelected;
-    final displayedDate = selectedDateTime ?? widget.initialDateTime;
+    final displayedDate = selectedDateTime ?? widget.initialDateTime?.toLocal();
     final String displayedText = displayedDate == null
         ? "- - -"
         : widget.dateFormat.format(displayedDate);
@@ -65,7 +65,7 @@ class _DateTimeButtonState extends State<DateTimeButton> {
         onPressed: onNewDateTimeSelected == null
             ? null
             : () async {
-                final initialDateTime = widget.initialDateTime;
+                final initialDateTime = widget.initialDateTime?.toLocal();
                 final now = DateTime.now();
                 DateTime? newDate = await showDatePicker(
                     locale: widget.locale,
